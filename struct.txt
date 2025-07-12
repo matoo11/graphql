@@ -1,0 +1,16 @@
+├── public/
+│   ├── index.html           # Main HTML file
+│   ├── login.html           # Login page
+│   ├── assets/
+│   │   ├── css/
+│   │   │   ├── main.css     # Main stylesheet
+│   │   │   ├── login.css    # Login page styles
+│   │   │   └── graphs.css   # Graph-specific styles
+│   │   ├── js/
+│   │   │   ├── auth.js      # Authentication logic
+│   │   │   ├── graphql.js   # GraphQL queries
+│   │   │   ├── profile.js   # Profile page logic
+│   │   │   └── charts.js    # SVG chart generation
+│   │   └── images/          # Any images/icons
+├── README.md                # Project documentation
+└── .gitignore               # Git ignore file
