@@ -1,0 +1,84 @@
+for the profile
+
+query{
+  user{
+    attrs
+  }
+}
+
+user front
+
+query User {
+    user {
+      id
+      login
+      auditRatio
+      totalDown
+      totalUp
+    }
+  }
+
+query Transaction {
+    transaction(
+      where: {
+        type: { _eq: "xp" }
+        event: { path: { _eq: "/bahrain/bh-module" } }
+      }
+    ) {
+      amount
+      path
+      createdAt
+      object {
+        name
+        object_type {
+          type
+        }
+      }
+    }
+  }
+
+
+user xp
+query Transaction_aggregate {
+    transaction_aggregate(
+      where: {
+        event: { path: { _eq: "/bahrain/bh-module" } }
+        type: { _eq: "xp" }
+      }
+    ) {
+      aggregate {
+        sum {
+          amount
+        }
+      }
+    }
+  } 
+
+
+
+user level
+query Event_user($userlogin: String) {
+    event_user(
+      where: {
+        userLogin: { _eq: $userlogin }
+        event: { path: { _eq: "/bahrain/bh-module" } }
+      }
+    ) {
+      level
+    }
+  }
+
+
+
+working on
+
+query Progress {
+    progress(
+      where: { isDone: { _eq: false }, object: { type: { _eq: "project" } } }
+      limit: 1
+    ) {
+      object {
+        name
+      }
+    }
+  }  

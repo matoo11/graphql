@@ -1,3 +1,129 @@
-<!-- TODO: Main profile page layout -->
-<!-- TODO: Data display sections -->
-<!-- TODO: Responsive design -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.................</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/graphs.css">
+</head>
+<body>
+    <div class="container">
+        <!-- .............. ...... -->
+        <header class="profile-header">
+            <div class="profile-card">
+                <div class="profile-avatar" id="avatar">........</div>
+                <div class="profile-info">
+                    <h1 id="userName">........</h1>
+                    <p id="userTitle">........</p>
+                    <p id="userLocation">........</p>
+                    <p id="userEmail">........</p>
+                    <span class="status-badge" id="userStatus">........</span>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn btn-primary" onclick="editProfile()">
+                        ✏️ .... ........
+                    </button>
+                    <button class="btn btn-secondary" onclick="shareProfile()">
+                        📤 .....
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- .......... .... -->
+        <main class="dashboard">
+            <!-- ....... ..... -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-content">
+                        <h3>................. .....</h3>
+                        <div class="stat-value" id="performanceScore">........</div>
+                        <div class="stat-label">... .. ...</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="........"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-content">
+                        <h3>........</h3>
+                        <div class="stat-value" id="projectsCompleted">........</div>
+                        <div class="stat-label">.........</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="........"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-content">
+                        <h3>..... ......</h3>
+                        <div class="stat-value" id="totalPoints">........</div>
+                        <div class="stat-label">........</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="........"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-content">
+                        <h3>.... ....</h3>
+                        <div class="stat-value" id="teamRank">........</div>
+                        <div class="stat-label">.. ........</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-width="........"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ...... .... -->
+            <section class="charts-section">
+                <div class="chart-card">
+                    <h3>📊 .............. .... ....</h3>
+                    <div class="chart-container">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="activity-card">
+                    <div class="notification-dot"></div>
+                    <h3>📢 ...... ........</h3>
+                    <div class="activity-list" id="activityList">
+                        <!-- .......... .... .. -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ...... & .... .... -->
+            <section class="info-section">
+                <div class="skills-card">
+                    <h3>🛠️ ...... & ........</h3>
+                    <div class="skills-list" id="skillsList">
+                        <!-- ...... .... .... -->
+                    </div>
+                </div>
+
+                <div class="achievements-card">
+                    <h3>🏆 ...... ..........</h3>
+                    <div class="achievements-list" id="achievementsList">
+                        <!-- ........... ....... -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/graphql.js"></script>
+    <script src="assets/js/charts.js"></script>
+    <script src="assets/js/profile.js"></script>
+</body>
+</html>
