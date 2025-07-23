@@ -3,26 +3,31 @@ const usernameInput = document.getElementById("username");
 const passwordInput = document.getElementById("password");
 const pwToggleBtn = document.querySelector(".pw-toggle");
 const authErrorDiv = document.getElementById("auth-error");
+const usernameErrorDiv = document.getElementById('username-error');
+const passwordErrorDiv = document.getElementById('password-error');
 
-pwToggleBtn.addEventListener("click", () => {
-    const isVisible = passwordInput.type === "text";
-    passwordInput.type = isVisible ? "password" : "text";
-    pwToggleBtn.textContent = isVisible ? "Show" : "Hide";
-});
+if (pwToggleBtn && passwordInput) {
+    pwToggleBtn.addEventListener("click", () => {
+        const isVisible = passwordInput.type === "text";
+        passwordInput.type = isVisible ? "password" : "text";
+        pwToggleBtn.textContent = isVisible ? "Show" : "Hide";
+    });
+}
 
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const username = usernameInput.value.trim();
-  const password = passwordInput.value.trim();
+if (loginForm && usernameInput && passwordInput && authErrorDiv && usernameErrorDiv && passwordErrorDiv) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
   authErrorDiv.textContent = "";
-  document.getElementById('username-error').textContent = "";
-  document.getElementById('password-error').textContent = "";
+  usernameErrorDiv.textContent = "";
+  passwordErrorDiv.textContent = "";
+
+  const username = usernameInput.value.trim();
+  const password = passwordInput.value;
 
   if (!username || !password) {
-    if (!username) document.getElementById('username-error').textContent = "Username is required.";
-    if (!password) document.getElementById('password-error').textContent = "Password is required.";
+    if (!username) usernameErrorDiv.textContent = "Username is required.";
+    if (!password) passwordErrorDiv.textContent = "Password is required.";
     return;
   }
 
@@ -54,4 +59,5 @@ loginForm.addEventListener("submit", async (e) => {
     authErrorDiv.textContent = 'An error occurred. Please try again.';
     console.error('Error fetching/storing JWT:', error);
   }
-});
+  });
+}
