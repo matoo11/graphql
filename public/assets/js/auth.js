@@ -40,21 +40,20 @@ if (loginForm && usernameInput && passwordInput && authErrorDiv && usernameError
         'Content-Type': 'application/json',
       },
     });
-
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         authErrorDiv.textContent = errorData.message || 'Login failed';
         return;
     }
 
-    const data = await response.text();
+    const data = await response.json();
     console.log(data);
 
     const jwtToken = data;
     localStorage.setItem('jwtToken', jwtToken);
     console.log("token: " + jwtToken)
     console.log('JWT token stored successfully!');
-    window.location.href = "/home/alimahdi/Downloads/GRAPH-QL/public/index.html";
+    window.location.href = "./index.html";
   } catch (error) {
     authErrorDiv.textContent = 'An error occurred. Please try again.';
     console.error('Error fetching/storing JWT:', error);

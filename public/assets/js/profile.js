@@ -1,26 +1,25 @@
 async function graphqlQuery(query, variables = {}) {
     try {
         const jwtToken = localStorage.getItem('jwtToken');
-        console.log("JWT Token:", jwtToken);
         if (!jwtToken) {
+            console.error('JWT token not found. Redirecting to login...');
             window.location.href = '/login';
-            console.error('JWT token not found. Please login.');
             return null;
         }
-        const response = await fetch('/api/graphql-engine/v1/graphql', {
+        const response = await fetch('https://learn.reboot01.com/api/graphql-engine/v1/graphql', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${jwtToken}`
             },
-            body: JSON.stringify({
-                query,
-                variables
-            })
+            body: JSON.stringify({ query, variables })
         });
 
         if (!response.ok) throw new Error('GraphQL request failed');
-        return await response.json();
+
+        const result = await response.json();
+        console.log('GraphQL result:', result); // ✅ LOG: Raw GraphQL response
+        return result;
     } catch (error) {
         console.error('GraphQL error:', error);
         return null;
@@ -73,7 +72,7 @@ async function fetchProfileData() {
         query {
             progress(
                 where: { isDone: { _eq: false }, object: { type: { _eq: "project" } } }
-                limit: 1
+                limit: 3
             ) {
                 object {
                     name
@@ -88,6 +87,7 @@ async function fetchProfileData() {
             graphqlQuery(xpQuery),
             graphqlQuery(progressQuery)
         ]);
+
         const userArr = userRes?.data?.user;
         const user = Array.isArray(userArr) && userArr.length > 0 ? userArr[0] : {};
         const xp = xpRes?.data?.transaction_aggregate?.aggregate?.sum?.amount || 0;
@@ -95,11 +95,13 @@ async function fetchProfileData() {
 
         let level = 0;
         if (user.login) {
-            const levelRes = await graphqlQuery(levelQuery, {
-                userlogin: user.login
-            });
-            level = levelRes?.data?.event_user?.[0]?.level || 0;
+            const levelRes = await graphqlQuery(levelQuery, { userlogin: user.login });
+            const levelArr = levelRes?.data?.event_user;
+            level = Array.isArray(levelArr) && levelArr.length > 0 ? levelArr[0].level : 0;
         }
+
+        // ✅ LOG: Final composed profile data
+        console.log('Fetched profile data:', { user, xp, level, nextProject });
 
         return { user, xp, level, nextProject };
     } catch (error) {
@@ -124,21 +126,28 @@ function updateProfileUI(data) {
 
     const { user, xp, level, nextProject } = data;
 
+    // ✅ LOG: Values being used to update UI
+    console.log('Updating UI with:', { user, xp, level, nextProject });
+
     document.getElementById('userName').textContent = user.login || 'Unknown';
     document.getElementById('userTitle').textContent = `Level ${level} Learner`;
     document.getElementById('userLocation').textContent = 'Bahrain';
     document.getElementById('userStatus').textContent = 'Active';
     document.getElementById('userStatus').className = 'status-badge active';
 
-    document.getElementById('performanceScore').textContent = user.auditRatio?.toFixed(1) || '0';
+    const auditRatio = typeof user.auditRatio === 'number' ? user.auditRatio.toFixed(1) : '0';
+    document.getElementById('performanceScore').textContent = auditRatio;
     document.getElementById('projectsCompleted').textContent = nextProject;
     document.getElementById('totalPoints').textContent = xp;
     document.getElementById('teamRank').textContent = `#${level}`;
 
-    document.querySelector('#performanceScore ~ .progress-bar .progress-fill').setAttribute('data-width', Math.min((user.auditRatio || 0) * 20, 100));
-    document.querySelector('#projectsCompleted ~ .progress-bar .progress-fill').setAttribute('data-width', level * 10);
-    document.querySelector('#totalPoints ~ .progress-bar .progress-fill').setAttribute('data-width', Math.min((xp || 0) / 100, 100));
-    document.querySelector('#teamRank ~ .progress-bar .progress-fill').setAttribute('data-width', level * 5);
+    const progressFills = document.querySelectorAll('.progress-fill');
+    if (progressFills.length >= 4) {
+        progressFills[0].setAttribute('data-width', Math.min((user.auditRatio || 0) * 20, 100));
+        progressFills[1].setAttribute('data-width', level * 10);
+        progressFills[2].setAttribute('data-width', Math.min((xp || 0) / 100, 100));
+        progressFills[3].setAttribute('data-width', level * 5);
+    }
 
     updateProgressBars();
 }
