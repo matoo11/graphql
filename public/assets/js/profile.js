@@ -97,7 +97,6 @@ async function fetchProfileData() {
             graphqlQuery(progressQuery)
         ]);
 
-        // Extract user attributes data
         const userAttrs = userDataRes?.data?.user?.[0]?.attrs || {};
         console.log('User attributes:', userAttrs);
         const userData = userDataRes?.data?.user?.attrs ;
@@ -121,44 +120,50 @@ async function fetchProfileData() {
     }
 }
 
+function formatBytes(bytes) {
+    if (bytes >= 1000000) {
+        return `${(bytes / 1000000).toFixed(1)} MB`;
+    } else if (bytes >= 1000) {
+        return `${(bytes / 1000).toFixed(1)} KB`;
+    }
+    return `${bytes} B`;
+}
+
 function updateProfileUI(data) {
     if (!data || !data.user || (!data.user.login && !data.user.firstName)) {
         console.error('User data not found. Please login again.');
         return;
     }
 
-    const { userAttrs,user, xp, level, pendingProjects } = data;
+    const { userAttrs, user, xp, level, pendingProjects } = data;
     console.log('Updating UI with:', { user, xp, level, pendingProjects });
-    // Use firstName if available, otherwise fall back to login
-    const displayName =  user.login || 'Unknown';
+    const displayName = user.login || 'Unknown';
     document.getElementById('userName').textContent = displayName;
 
-    // Use country from attrs if available
     document.getElementById('userLocation').textContent = userAttrs?.country || 'Unknown Location';
     document.getElementById('userEmail').textContent = userAttrs?.email || 'Not specified';
     document.getElementById('phoneNumber').textContent = userAttrs?.PhoneNumber || 'Not specified';
     document.getElementById('Degree').textContent = userAttrs?.Degree || 'Not specified';
     document.getElementById('userStatus').textContent = data.userAttrs?.status || 'Active';
 
-
     const auditRatio = typeof user.auditRatio === 'number' ? user.auditRatio.toFixed(1) : '0';
     document.getElementById('AuditScore').textContent = auditRatio;
-    document.getElementById('recived').textContent = user.totalDown+' B' || 0;
-    document.getElementById('Done').textContent = user.totalUp+' B' || 0;
+    document.getElementById('recived').textContent = formatBytes(user.totalDown || 0);
+    document.getElementById('Done').textContent = formatBytes(user.totalUp || 0);
 
-    document.getElementById('pendingProjects').textContent = pendingProjects ;
-    document.getElementById('totalPoints').textContent = xp+' B';
+    document.getElementById('pendingProjects').textContent = pendingProjects;
+    document.getElementById('totalPoints').textContent = formatBytes(xp || 0);
     document.getElementById('Level').textContent = `#${level}`;
-    const rank=testLevel(level);
+    const rank = testLevel(level);
     document.getElementById('rank').textContent = rank;
+
     const progressFills = document.querySelectorAll('.progress-fill');
     if (progressFills.length >= 4) {
         progressFills[0].setAttribute('data-width', Math.min((user.auditRatio || 0) * 20, 100));
         progressFills[1].setAttribute('data-width', level * 10);
-        progressFills[2].setAttribute('data-width', Math.min((xp || 0) / 100, 100));
+        progressFills[2].setAttribute('data-width', Math.min((xp || 0) / 1000000, 100)); // Scale for MB
         progressFills[3].setAttribute('data-width', level * 5);
     }
-
 }
 async function initProfile() {
     const data = await fetchProfileData();
