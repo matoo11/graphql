@@ -12,21 +12,27 @@
         <!-- .............. ...... -->
         <header class="profile-header">
             <div class="profile-card">
-                <div class="profile-avatar" id="avatar">........</div>
+                <div class="profile-avatar" id="userAvatar">........</div>
                 <div class="profile-info">
-                    <h1 id="userName">........</h1>
-                    <p id="userTitle">........</p>
-                    <p id="userLocation">........</p>
-                    <p id="userEmail">........</p>
+                    <div class="userstyle" data-label="Name:">  
+                        <h1 id="userName">........</h1>
+                    </div>  
+                    <div class="userstyle" data-label="Location:">  
+                        <h1 id="userLocation">........</h1>
+                    </div>  
+                    <div class="userstyle" data-label="Email:">  
+                        <h1 id="userEmail">........</h1>
+                    </div>  
+                    <div class="userstyle" data-label="Phone:">  
+                        <h1 id="phoneNumber">........</h1>
+                    </div>  
+                    <div class="userstyle" data-label="Degree:">  
+                        <h1 id="Degree">........</h1>
+                    </div>  
                     <span class="status-badge" id="userStatus">........</span>
                 </div>
                 <div class="profile-actions">
-                    <button class="btn btn-primary" onclick="editProfile()">
-                        ✏️ .... ........
-                    </button>
-                    <button class="btn btn-secondary" onclick="shareProfile()">
-                        📤 .....
-                    </button>
+                    <button id="logoutBtn" class="btn">Logout</button>
                 </div>
             </div>
         </header>
@@ -38,9 +44,11 @@
                 <div class="stat-card">
                     <div class="stat-icon">📈</div>
                     <div class="stat-content">
-                        <h3>................. .....</h3>
-                        <div class="stat-value" id="performanceScore">........</div>
-                        <div class="stat-label">... .. ...</div>
+                        <h3>Audit Ratio</h3>
+                        <div class="stat-value" id="AuditScore">........</div>
+                        <div class="stat-label" id="Done">... .. ...</div>
+                        <div class="stat-label" id="recived">... .. ...</div>
+
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="........"></div>
                         </div>
@@ -50,8 +58,8 @@
                 <div class="stat-card">
                     <div class="stat-icon">🚀</div>
                     <div class="stat-content">
-                        <h3>........</h3>
-                        <div class="stat-value" id="projectsCompleted">........</div>
+                        <h3>Pending Projects</h3>
+                        <div class="stat-value" id="pendingProjects">........</div>
                         <div class="stat-label">.........</div>
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="........"></div>
@@ -62,9 +70,8 @@
                 <div class="stat-card">
                     <div class="stat-icon">⭐</div>
                     <div class="stat-content">
-                        <h3>..... ......</h3>
+                        <h3>XP</h3>
                         <div class="stat-value" id="totalPoints">........</div>
-                        <div class="stat-label">........</div>
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="........"></div>
                         </div>
@@ -74,9 +81,9 @@
                 <div class="stat-card">
                     <div class="stat-icon">👥</div>
                     <div class="stat-content">
-                        <h3>.... ....</h3>
-                        <div class="stat-value" id="teamRank">........</div>
-                        <div class="stat-label">.. ........</div>
+                        <h3>Level</h3>
+                        <div class="stat-value" id="Level">........</div>
+                        <div class="stat-label" id="rank">.. ........</div>
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="........"></div>
                         </div>

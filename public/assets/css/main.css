@@ -20,6 +20,7 @@
     --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.5);
     --border-radius: 1.5rem;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --glass-border-hover: rgba(59, 130, 246, 0.4); 
 }
 
 body {
@@ -321,6 +322,7 @@ body::before {
 .stat-card:hover {
     transform: translateY(-5px);
     box-shadow: var(--shadow-medium), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-color: var(--glass-border-hover);
 }
 
 .stat-icon {
@@ -439,6 +441,8 @@ body::before {
 }
 
 .activity-list {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-gradient) rgba(71, 85, 105, 0.3);
     max-height: 280px;
     overflow-y: auto;
 }
@@ -706,6 +710,13 @@ body::before {
     animation: loading 1.5s infinite;
 }
 
+.skeleton-text {
+    height: 1em;
+    width: 80%;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
 @keyframes loading {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
@@ -714,6 +725,13 @@ body::before {
 /* Scrollbar Styling */
 .activity-list::-webkit-scrollbar {
     width: 6px;
+}
+input, select, textarea {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    border-radius: 8px;
+    padding: 0.75rem;
 }
 
 .activity-list::-webkit-scrollbar-track {
@@ -736,6 +754,10 @@ body::before {
 .profile-avatar:focus-visible {
     outline: 2px solid #3b82f6;
     outline-offset: 2px;
+}
+
+.btn:active {
+    transform: translateY(1px);
 }
 
 /* Reduced Motion Support */
@@ -774,4 +796,33 @@ body::before {
     .achievements-card {
         border: 3px solid #3b82f6;
     }
+}
+
+.userstyle {
+    margin: 8px 0;
+    padding: 10px 15px;
+    background-color: #2a2a2a; 
+    border: 1px solid #444; 
+    display: flex;
+    align-items: center;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.userstyle h1 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: #ffffff; 
+}
+
+.userstyle::before {
+    content: attr(data-label);
+    font-weight: 600;
+    margin-right: 12px;
+    color: #a0a0a0; 
+    min-width: 90px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
