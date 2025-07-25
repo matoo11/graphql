@@ -27,6 +27,14 @@ async function graphqlQuery(query, variables = {}) {
 }
 
 async function fetchProfileData() {
+    const userDataquery = `
+        query {
+            user {
+                attrs
+            }
+        }
+    `;
+
     const userQuery = `
         query {
             user {
@@ -82,16 +90,21 @@ async function fetchProfileData() {
     `;
 
     try {
-        const [userRes, xpRes, progressRes] = await Promise.all([
+        const [userDataRes, userRes, xpRes, progressRes] = await Promise.all([
+            graphqlQuery(userDataquery),
             graphqlQuery(userQuery),
             graphqlQuery(xpQuery),
             graphqlQuery(progressQuery)
         ]);
 
+        // Extract user attributes data
+        const userAttrs = userDataRes?.data?.user?.[0]?.attrs || {};
+        console.log('User attributes:', userAttrs);
+        const userData = userDataRes?.data?.user?.attrs ;
         const userArr = userRes?.data?.user;
         const user = Array.isArray(userArr) && userArr.length > 0 ? userArr[0] : {};
         const xp = xpRes?.data?.transaction_aggregate?.aggregate?.sum?.amount || 0;
-        const nextProject = progressRes?.data?.progress?.[0]?.object?.name || 'No current project';
+        const pendingProjects = progressRes?.data?.progress?.[0]?.object?.name || 'No current project';
 
         let level = 0;
         if (user.login) {
@@ -100,47 +113,44 @@ async function fetchProfileData() {
             level = Array.isArray(levelArr) && levelArr.length > 0 ? levelArr[0].level : 0;
         }
 
-        // ✅ LOG: Final composed profile data
-        console.log('Fetched profile data:', { user, xp, level, nextProject });
-
-        return { user, xp, level, nextProject };
+        console.log('Fetched profile data:', { user, xp, level, pendingProjects });
+        return { userAttrs,user, xp, level, pendingProjects };
     } catch (error) {
         console.error('Error fetching profile data:', error);
         return null;
     }
 }
 
-function updateProgressBars() {
-    const progressBars = document.querySelectorAll('.progress-fill');
-    progressBars.forEach(bar => {
-        const width = bar.getAttribute('data-width');
-        bar.style.width = `${width}%`;
-    });
-}
-
 function updateProfileUI(data) {
-    if (!data || !data.user || !data.user.login) {
+    if (!data || !data.user || (!data.user.login && !data.user.firstName)) {
         console.error('User data not found. Please login again.');
         return;
     }
 
-    const { user, xp, level, nextProject } = data;
+    const { userAttrs,user, xp, level, pendingProjects } = data;
+    console.log('Updating UI with:', { user, xp, level, pendingProjects });
+    // Use firstName if available, otherwise fall back to login
+    const displayName =  user.login || 'Unknown';
+    document.getElementById('userName').textContent = displayName;
 
-    // ✅ LOG: Values being used to update UI
-    console.log('Updating UI with:', { user, xp, level, nextProject });
+    // Use country from attrs if available
+    document.getElementById('userLocation').textContent = userAttrs?.country || 'Unknown Location';
+    document.getElementById('userEmail').textContent = userAttrs?.email || 'Not specified';
+    document.getElementById('phoneNumber').textContent = userAttrs?.PhoneNumber || 'Not specified';
+    document.getElementById('Degree').textContent = userAttrs?.Degree || 'Not specified';
+    document.getElementById('userStatus').textContent = data.userAttrs?.status || 'Active';
 
-    document.getElementById('userName').textContent = user.login || 'Unknown';
-    document.getElementById('userTitle').textContent = `Level ${level} Learner`;
-    document.getElementById('userLocation').textContent = 'Bahrain';
-    document.getElementById('userStatus').textContent = 'Active';
-    document.getElementById('userStatus').className = 'status-badge active';
 
     const auditRatio = typeof user.auditRatio === 'number' ? user.auditRatio.toFixed(1) : '0';
-    document.getElementById('performanceScore').textContent = auditRatio;
-    document.getElementById('projectsCompleted').textContent = nextProject;
-    document.getElementById('totalPoints').textContent = xp;
-    document.getElementById('teamRank').textContent = `#${level}`;
+    document.getElementById('AuditScore').textContent = auditRatio;
+    document.getElementById('recived').textContent = user.totalDown+' B' || 0;
+    document.getElementById('Done').textContent = user.totalUp+' B' || 0;
 
+    document.getElementById('pendingProjects').textContent = pendingProjects ;
+    document.getElementById('totalPoints').textContent = xp+' B';
+    document.getElementById('Level').textContent = `#${level}`;
+    const rank=testLevel(level);
+    document.getElementById('rank').textContent = rank;
     const progressFills = document.querySelectorAll('.progress-fill');
     if (progressFills.length >= 4) {
         progressFills[0].setAttribute('data-width', Math.min((user.auditRatio || 0) * 20, 100));
@@ -149,9 +159,7 @@ function updateProfileUI(data) {
         progressFills[3].setAttribute('data-width', level * 5);
     }
 
-    updateProgressBars();
 }
-
 async function initProfile() {
     const data = await fetchProfileData();
     updateProfileUI(data);
@@ -159,5 +167,17 @@ async function initProfile() {
         initCharts();
     }
 }
+function testLevel(level) {
+    if (level >= 0 && level <= 9) return 'Aspiring developer';
+    if (level >= 10 && level <= 19) return 'Beginner developer';
+    if (level >= 20 && level <= 29) return 'Apprentice developer';
+    if (level >= 30 && level <= 39) return 'Assistant developer';
+    if (level >= 40 && level <= 49) return 'Basic developer';
+    if (level >= 50 && level <= 54) return 'Junior developer';
+    if (level >= 55 && level <= 59) return 'Confirmed developer';
+    if (level === 60) return 'Full-Stack developer';
+    return 'Unknown rank'; // Fallback for levels outside defined ranges
+}
+
 
 document.addEventListener('DOMContentLoaded', initProfile);
