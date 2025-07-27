@@ -6,6 +6,8 @@
     <title>.................</title>
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/graphs.css">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 </head>
 <body>
     <div class="container">
@@ -42,16 +44,17 @@
             <!-- ....... ..... -->
             <section class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-icon">📈</div>
+                  
                     <div class="stat-content">
                         <h3>Audit Ratio</h3>
                         <div class="stat-value" id="AuditScore">........</div>
                         <div class="stat-label" id="Done">... .. ...</div>
                         <div class="stat-label" id="recived">... .. ...</div>
-
+                      
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="........"></div>
                         </div>
+                          <div id="piechart"></div>
                     </div>
                 </div>
 
@@ -132,5 +135,6 @@
     <script src="assets/js/graphql.js"></script>
     <script src="assets/js/charts.js"></script>
     <script src="assets/js/profile.js"></script>
+
 </body>
 </html>

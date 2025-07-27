@@ -1,3 +1,12 @@
 /* TODO: SVG chart styles */
 /* TODO: Tooltip styling */
 /* TODO: Animation effects */
+.stat-card {
+  display: grid;
+  place-items: center; /* Centers everything */
+}
+
+#piechart {
+  width: 200px;
+  height: 200px;
+}

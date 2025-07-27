@@ -76,11 +76,11 @@ async function fetchProfileData() {
         }
     `;
 
-    const progressQuery = `
+    const pending = `
         query {
             progress(
                 where: { isDone: { _eq: false }, object: { type: { _eq: "project" } } }
-                limit: 3
+               
             ) {
                 object {
                     name
@@ -94,7 +94,7 @@ async function fetchProfileData() {
             graphqlQuery(userDataquery),
             graphqlQuery(userQuery),
             graphqlQuery(xpQuery),
-            graphqlQuery(progressQuery)
+            graphqlQuery(pending)
         ]);
 
         const userAttrs = userDataRes?.data?.user?.[0]?.attrs || {};
