@@ -26,7 +26,7 @@ async function graphqlQuery(query, variables = {}) {
     }
 }
 
-async function fetchProfileData() {
+async function FetchProfileData() {
     const userDataquery = `
         query {
             user {
@@ -166,7 +166,7 @@ function updateProfileUI(data) {
     }
 }
 async function initProfile() {
-    const data = await fetchProfileData();
+    const data = await FetchProfileData();
     updateProfileUI(data);
     if (typeof initCharts === 'function') {
         initCharts();
@@ -184,5 +184,10 @@ function testLevel(level) {
     return 'Unknown rank'; // Fallback for levels outside defined ranges
 }
 
+function getAudit(data){
+
+
+
+}
 
 document.addEventListener('DOMContentLoaded', initProfile);

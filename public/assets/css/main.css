@@ -841,3 +841,7 @@ input, select, textarea {
         border: 3px solid #3b82f6;
     }
 }
+#Done,
+#recived {
+  display: none;
+}
