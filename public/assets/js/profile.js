@@ -6,14 +6,12 @@ import {
     fetchPendingProject
 } from './query.js';
 
-// Format bytes into human-readable format
 function formatBytes(bytes) {
     if (bytes >= 1_000_000) return `${(bytes / 1_000_000).toFixed(1)} MB`;
     if (bytes >= 1_000) return `${(bytes / 1_000).toFixed(1)} KB`;
     return `${bytes} B`;
 }
 
-// Determine rank based on level
 function testLevel(level) {
     if (level >= 0 && level <= 9) return 'Aspiring developer';
     if (level <= 19) return 'Beginner developer';
@@ -26,7 +24,6 @@ function testLevel(level) {
     return 'Unknown rank';
 }
 
-// Fetch all profile-related data
 async function FetchProfileData() {
     try {
         const [userAttrs, user, xp, pendingProjects] = await Promise.all([
@@ -45,13 +42,12 @@ async function FetchProfileData() {
     }
 }
 
-// Update the UI with profile data
 function updateProfileUI(data) {
     if (!data || !data.user) {
         console.error('User data not found. Please login again.');
         return;
     }
-
+    console.log('Profile data:', data);
     const { userAttrs, user, xp, level, pendingProjects } = data;
 
     document.getElementById('userName').textContent = user.login || 'Unknown';
@@ -61,7 +57,7 @@ function updateProfileUI(data) {
     document.getElementById('Degree').textContent = userAttrs?.Degree || 'Not specified';
     document.getElementById('userStatus').textContent = userAttrs?.status || 'Active';
 
-    document.getElementById('AuditScore').textContent = 
+    document.getElementById('AuditScore').textContent =
         typeof user.auditRatio === 'number' ? user.auditRatio.toFixed(1) : '0';
 
     document.getElementById('recived').textContent = formatBytes(user.totalDown || 0);
@@ -80,19 +76,14 @@ function updateProfileUI(data) {
     }
 }
 
-// Init the profile and optionally the charts
 async function initProfile() {
     const data = await FetchProfileData();
     updateProfileUI(data);
 
-    // Let piechart.js attach this dynamically
     if (typeof initCharts === 'function') {
         initCharts();
     }
 }
 
-// Automatically run on DOM load
 document.addEventListener('DOMContentLoaded', initProfile);
-
-// Make it accessible globally in case piechart.js needs it
 window.initProfile = initProfile;

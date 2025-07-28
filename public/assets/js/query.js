@@ -1,4 +1,3 @@
-// query.js
 import { graphqlQuery } from './graphql.js';
 
 export async function fetchUserAttrs() {

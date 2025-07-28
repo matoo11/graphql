@@ -1,4 +1,3 @@
-// graphql.js
 export async function graphqlQuery(query, variables = {}) {
     try {
         const jwtToken = localStorage.getItem('jwtToken');
@@ -20,7 +19,7 @@ export async function graphqlQuery(query, variables = {}) {
         if (!response.ok) throw new Error('GraphQL request failed');
 
         const result = await response.json();
-        return result;
+        return result; // return full response including data and errors
     } catch (error) {
         console.error('GraphQL error:', error);
         return null;
