@@ -104,3 +104,16 @@ async function initProfile() {
 
 document.addEventListener('DOMContentLoaded', initProfile);
 window.initProfile = initProfile;
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutForm = document.getElementById('logoutForm');
+  
+    if (logoutForm) {
+      logoutForm.addEventListener('submit', function (e) {
+        e.preventDefault(); 
+  
+        localStorage.removeItem('jwtToken');
+        window.location.href = './login.html';
+      });
+    }
+  });
+  
