@@ -10,3 +10,91 @@
   width: 200px;
   height: 200px;
 }
+
+#barchart {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  position: relative;
+}
+
+#barchart::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  animation: rotate 15s linear infinite;
+  z-index: 0;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem;
+  text-align: center;
+  color: #f87171;
+  gap: 1rem;
+}
+
+.error-state svg {
+  width: 48px;
+  height: 48px;
+  stroke: #f87171;
+}
+
+.error-state button {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 0.5rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+}
+
+.error-state button:hover {
+  background: rgba(239, 68, 68, 0.25);
+}
+
+
+.project-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+}
+
+.project-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.dot {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+.dot.blue { background-color: #3b82f6; }
+.dot.green { background-color: #10b981; }
+.dot.orange { background-color: #f97316; }
+.dot.red { background-color: #ef4444; }
+.dot.yellow { background-color: #eab308; }

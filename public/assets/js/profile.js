@@ -64,7 +64,22 @@ function updateProfileUI(data) {
 
     document.getElementById('recived').textContent = formatBytes(user.totalDown || 0);
     document.getElementById('Done').textContent = formatBytes(user.totalUp || 0);
-    document.getElementById('pendingProjects').textContent = pendingProjects;
+    console.log('Pending Projects:', pendingProjects);
+    const projects = pendingProjects.map(p => p || 'Unknown Project');
+        const colors = ['blue', 'green', 'purple', 'orange', 'red', 'yellow'];
+    
+    const container = document.getElementById('projectListContainer');
+        container.innerHTML = `
+        <ul class="project-list">
+            ${projects.map((name, index) => `
+                <li><span class="dot ${colors[index % colors.length]}"></span> ${name}</li>
+            `).join('')}
+        </ul>
+    `;
+    
+    document.getElementById('pendingProjects').textContent = projects.length;
+    
+    
     document.getElementById('totalPoints').textContent = formatBytes(xp || 0);
     document.getElementById('Level').textContent = `#${level}`;
     document.getElementById('rank').textContent = testLevel(level);

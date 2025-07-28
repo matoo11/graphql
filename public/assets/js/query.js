@@ -68,19 +68,26 @@ export async function fetchLevel(userlogin) {
 }
 
 export async function fetchPendingProject() {
-    const query = `
-        query {
-            progress(
-                where: { isDone: { _eq: false }, object: { type: { _eq: "project" } } }
-            ) {
-                object {
-                    name
+
+        const query = `
+            query {
+                progress(
+                    where: { isDone: { _eq: false }, object: { type: { _eq: "project" } } }
+                ) {
+                    object {
+                        name
+                    }
                 }
             }
-        }
-    `;
-    const res = await graphqlQuery(query);
-    return res?.data?.progress?.[0]?.object?.name || 'No current project';
+        `;
+        
+        const res = await graphqlQuery(query);
+        console.log('pendingProjects:', res || 'No current projects');
+    
+        return res?.data?.progress?.map(p => p.object.name) || [];
+    
+
+    
 }
 
 

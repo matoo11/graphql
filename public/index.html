@@ -11,6 +11,7 @@
     <script type="module" src="assets/js/profile.js"></script>
     <script type="module" src="assets/js/graphql.js"></script>
     <script type="module" src="assets/js/radarchart.js"></script>
+    <script type="module" src="assets/js/barchart.js"></script>
 
 
 </head>
@@ -68,12 +69,20 @@
                     <div class="stat-content">
                         <h3>Pending Projects</h3>
                         <div class="stat-value" id="pendingProjects">........</div>
-                        <div class="stat-label">.........</div>
+                        <div class="stat-label" id="projectListContainer"></div> 
                         <div class="progress-bar">
                             <div class="progress-fill" data-width="........"></div>
                         </div>
                     </div>
                 </div>
+                
+                
+
+                <div class="stat-card">
+                    <div class="stat-icon">🚀</div>
+                    <div id="barchart"></div>
+                </div>
+
 
                 <div class="stat-card">
                     <div class="stat-icon">⭐</div>
