@@ -149,3 +149,32 @@ export async function fetchSkills() {
     return res?.data?.transaction || [];
   }
     
+
+export async function fetchprojectsDone() { 
+    const query=`
+      query Transaction {
+    transaction(
+      where: {
+        type: { _eq: "xp" }
+        event: { path: { _eq: "/bahrain/bh-module" } }
+      }
+    ) {
+        createdAt
+      object {
+        name
+        
+      }
+    }
+  }
+    `;
+
+    const res = await graphqlQuery(query);
+
+    const projects = res?.data?.transaction?.map(p => ({
+    name: p.object?.name,
+    createdAt: p.createdAt
+})) || [];
+
+return projects;
+
+}
