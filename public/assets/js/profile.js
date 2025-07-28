@@ -3,7 +3,8 @@ import {
     fetchUserInfo,
     fetchXP,
     fetchLevel,
-    fetchPendingProject
+    fetchPendingProject,
+    fetchSkills
 } from './query.js';
 
 function formatBytes(bytes) {
@@ -26,16 +27,17 @@ function testLevel(level) {
 
 async function FetchProfileData() {
     try {
-        const [userAttrs, user, xp, pendingProjects] = await Promise.all([
+        const [userAttrs, user, xp, pendingProjects,skil] = await Promise.all([
             fetchUserAttrs(),
             fetchUserInfo(),
             fetchXP(),
-            fetchPendingProject()
+            fetchPendingProject(),
+            fetchSkills()
         ]);
 
         const level = user?.login ? await fetchLevel(user.login) : 0;
 
-        return { userAttrs, user, xp, level, pendingProjects };
+        return { userAttrs, user, xp, level, pendingProjects,skil };
     } catch (err) {
         console.error('Error in FetchProfileData:', err);
         return null;
@@ -48,8 +50,8 @@ function updateProfileUI(data) {
         return;
     }
     console.log('Profile data:', data);
-    const { userAttrs, user, xp, level, pendingProjects } = data;
-
+    const { userAttrs, user, xp, level, pendingProjects,skil } = data;
+    console.log('skil:', skil);
     document.getElementById('userName').textContent = user.login || 'Unknown';
     document.getElementById('userLocation').textContent = userAttrs?.country || 'Unknown Location';
     document.getElementById('userEmail').textContent = userAttrs?.email || 'Not specified';

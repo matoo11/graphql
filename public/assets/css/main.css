@@ -845,3 +845,13 @@ input, select, textarea {
 #recived {
   display: none;
 }
+
+
+.activity-list {
+    scrollbar-width: none; 
+    -ms-overflow-style: none; 
+}
+
+.activity-list::-webkit-scrollbar {
+    display: none; 
+}

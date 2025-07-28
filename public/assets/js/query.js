@@ -82,3 +82,33 @@ export async function fetchPendingProject() {
     const res = await graphqlQuery(query);
     return res?.data?.progress?.[0]?.object?.name || 'No current project';
 }
+
+
+export async function fetchSkills() {
+    const query = `
+      query {
+        transaction(
+          where: {
+            _and: [
+              {type: { _iregex: "(^|[^[:alnum:]_])[[:alnum:]_]*skill_[[:alnum:]_]*($|[^[:alnum:]_])" }},
+              {object: {type: {_eq: "project"}}},
+              {type: {_in: [
+                "skill_prog", "skill_algo", "skill_sys-admin", "skill_front-end", 
+                "skill_back-end", "skill_stats", "skill_ai", "skill_game", 
+                "skill_tcp"
+              ]}}
+            ]
+          }
+          order_by: [{type: asc}, {createdAt: desc}]
+          distinct_on: type
+        ) {
+          amount
+          type
+        }
+      }
+    `;
+  
+    const res = await graphqlQuery(query);
+    return res?.data?.transaction || [];
+  }
+  
