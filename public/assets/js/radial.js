@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 height: 380,
                 type: 'radialBar',
                 toolbar: {
-                    show: true
+                    show: false
                 }
             },
             plotOptions: {

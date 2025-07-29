@@ -11,6 +11,22 @@ export async function fetchUserAttrs() {
     const res = await graphqlQuery(query);
     return res?.data?.user?.[0]?.attrs || {};
 }
+    
+
+export async function fetchUserAvatar() {
+    const query = `
+    query {
+      user {
+        attrs
+      }
+    }
+  `;
+    const res = await graphqlQuery(query);
+    const attrs = res?.data?.user?.[0]?.attrs || {};
+
+    return attrs["pro-picUploadId"];
+}
+
 
 export async function fetchUserInfo() {
     const query = `
@@ -177,4 +193,88 @@ export async function fetchprojectsDone() {
 
 return projects;
 
+}
+
+export async function fetchPassedAudits() {
+  const query = `
+    query GetPassedAudits {
+      user {
+        audits(where: {grade: {_gte: 1}}) {
+          group {
+            captainLogin
+            path
+            object {
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await graphqlQuery(query);
+    const audits = response?.data?.user?.[0]?.audits || [];
+
+    const projectMap = new Map();
+
+    audits.forEach((audit) => {
+      const projectName =
+        audit.group?.object?.name ||
+        audit.group?.path?.split("/").filter(Boolean).pop() ||
+        "Unknown Project";
+      projectMap.set(projectName, (projectMap.get(projectName) || 0) + 1);
+    });
+
+    return Array.from(projectMap.entries())
+      .map(([name, count]) => ({ x: name, y: count }))
+      .sort((a, b) => b.y - a.y);
+
+  } catch (error) {
+    console.error("Failed to fetch passed audits:", error);
+    return [];
+  }
+}
+
+
+export async function fetchFailedAudits() {
+  const query = `
+    query GetFailedAudits {
+      user {
+        failedAudits: audits(where: {grade: {_lt: 1}}) {
+          group {
+            captainLogin
+            path
+            object {
+              name
+            }
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await graphqlQuery(query);
+    
+    // Process the audit data
+    const audits = response?.data?.user?.failedAudits || [];
+    const projectMap = new Map();
+
+    audits.forEach((audit) => {
+      const projectName = 
+        audit.group?.object?.name ||
+        audit.group?.path?.split("/").filter(Boolean).pop() ||
+        "Unknown Project";
+      projectMap.set(projectName, (projectMap.get(projectName) || 0) + 1);
+    });
+
+    return Array.from(projectMap.entries())
+      .map(([name, count]) => ({ x: name, y: count }))
+      .sort((a, b) => b.y - a.y);
+
+  } catch (error) {
+    console.error("Failed to fetch failed audits:", error);
+    return [];
+  }
 }
