@@ -57,14 +57,14 @@ document.addEventListener('DOMContentLoaded', async function () {
         categories: dates,
         labels: {
           style: {
-            colors: '#d1d5db' 
+            colors: '#000000' 
           }
         }
       },
       yaxis: {
         labels: {
           style: {
-            colors: '#d1d5db'
+            colors: '#000000' 
           }
         }
       }

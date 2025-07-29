@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         polygons: {
           strokeColor: '#475569',
           fill: {
-            colors: ['#1e293b', '#0f172a'] 
+            colors: ['#1e293b', '#ffffff'] 
           }
         }
       }
@@ -88,16 +88,17 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     },
     yaxis: {
-      show: true,
-      tickAmount: 5,
-      labels: {
-        formatter: val => `${val}`,
-        style: {
-          fontSize: '11px',
-          color: '#000000' 
-        }
-      }
+  show: true,
+  tickAmount: 5,
+  labels: {
+    formatter: val => `${val}`,
+    style: {
+      fontSize: '11px',
+      color: '#ffffff' 
     }
+  }
+}
+
   };
 
   const chart = new ApexCharts(chartContainer, options);

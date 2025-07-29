@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>.................</title>
+    <title>graphql</title>
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/graphs.css">
     <link rel="shortcut icon" href="#">
@@ -21,54 +21,53 @@
 </head>
 <body>
     <div class="container">
-        <!-- .............. ...... -->
+        <!-- Profile Header -->
         <header class="profile-header">
             <div class="profile-card">
-                <div class="profile-avatar" id="userAvatar">........</div>
+                <div class="profile-avatar" id="userAvatar">
+                    <img src="assets/img/anonymous.jpg" alt="User Avatar">
+                </div>
                 <div class="profile-info">
                     <div class="userstyle" data-label="Name:">  
-                        <h1 id="userName">........</h1>
+                        <h1 id="userName"></h1>
                     </div>  
                     <div class="userstyle" data-label="Location:">  
-                        <h1 id="userLocation">........</h1>
+                        <h1 id="userLocation"></h1>
                     </div>  
                     <div class="userstyle" data-label="Email:">  
-                        <h1 id="userEmail">........</h1>
+                        <h1 id="userEmail"></h1>
                     </div>  
                     <div class="userstyle" data-label="Phone:">  
-                        <h1 id="phoneNumber">........</h1>
+                        <h1 id="phoneNumber"></h1>
                     </div>  
                     <div class="userstyle" data-label="Degree:">  
-                        <h1 id="Degree">........</h1>
+                        <h1 id="Degree"></h1>
                     </div>  
-                    <span class="status-badge" id="userStatus">........</span>
+                    <span class="status-badge" id="userStatus">Active</span>
                 </div>
                 <div class="profile-actions">
                     <form id="logoutForm">
-                        <button type="submit" class="btn">Logout</button>
+                        <button type="submit" class="btn btn-primary">Logout</button>
                     </form>
-                    
-                      
                 </div>
             </div>
         </header>
 
-        <!-- .......... .... -->
+        <!-- Dashboard Main -->
         <main class="dashboard">
-            <!-- ....... ..... -->
+            <!-- Statistics Grid -->
             <section class="stats-grid">
                 <div class="stat-card">
-                  
+                    <div class="stat-icon">📊</div>
                     <div class="stat-content">
                         <h3>Audit Ratio</h3>
-                        <div class="stat-value" id="AuditScore">........</div>
-                        <div class="stat-label" id="Done" >... .. ...</div>
-                        <div class="stat-label" id="recived">... .. ...</div>
-                      
+                        <div class="stat-value" id="AuditScore"></div>
+                        <div class="stat-label" id="Done"></div>
+                        <div class="stat-label" id="recived"></div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-width="........"></div>
+                            <div class="progress-fill" data-width="85"></div>
                         </div>
-                          <div id="piechart"></div>
+                        <div id="piechart"></div>
                     </div>
                 </div>
 
@@ -76,24 +75,21 @@
                     <div class="stat-icon">🚀</div>
                     <div class="stat-content">
                         <h3>Pending Projects</h3>
-                        <div class="stat-value" id="pendingProjects">........</div>
+                        <div class="stat-value" id="pendingProjects"></div>
                         <div class="stat-label" id="projectListContainer"></div> 
                         <div class="progress-bar">
-                            <div class="progress-fill" data-width="........"></div>
+                            <div class="progress-fill" data-width="60"></div>
                         </div>
                     </div>
                 </div>
-                
-
-
 
                 <div class="stat-card">
                     <div class="stat-icon">⭐</div>
                     <div class="stat-content">
                         <h3>XP</h3>
-                        <div class="stat-value" id="totalPoints">........</div>
+                        <div class="stat-value" id="totalPoints"></div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-width="........"></div>
+                            <div class="progress-fill" data-width="75"></div>
                         </div>
                     </div>
                 </div>
@@ -102,51 +98,54 @@
                     <div class="stat-icon">👥</div>
                     <div class="stat-content">
                         <h3>Level</h3>
-                        <div class="stat-value" id="Level">........</div>
-                        <div class="stat-label" id="rank">.. ........</div>
+                        <div class="stat-value" id="Level"></div>
+                        <div class="stat-label" id="rank"></div>
                         <div class="progress-bar">
-                            <div class="progress-fill" data-width="........"></div>
+                            <div class="progress-fill" data-width="90"></div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- ...... .... -->
+            <!-- Charts Section -->
             <section class="charts-section">
                 <div class="chart-card">
-                    <h3>progress 📊 </h3>
+                    <h3>Progress 📊</h3>
                     <div id="progress-chart"></div>
                 </div>
 
                 <div class="activity-card">
                     <div class="notification-dot"></div>
+                    <h3>Skills Overview</h3>
                     <div class="activity-list" id="radarchart">
-                        <!-- .......... .... .. -->
+                        <!-- Radar chart will be rendered here -->
                     </div>
                 </div>
             </section>
 
-            <!-- ...... & .... .... -->
+            <!-- Info Section -->
             <section class="info-section">
                 <div class="achievements-card">
-                    <h3>🏆 Audit status</h3>
+                    <h3>🏆 Audit Status</h3>
                     <div class="achievements-list" id="passed-audits-chart">
-                        <!-- ........... ....... -->
+                        <!-- Passed audits chart -->
                     </div>
-                     <div class="achievements-list" id="failed-audits-chart">
-                        <!-- ........... ....... -->
+                    <div class="achievements-list" id="failed-audits-chart">
+                        <!-- Failed audits chart -->
                     </div>
                 </div>
                 <div class="skills-card" id="skills-card">
-                   
+                    <h3>🛠️ Skills</h3>
+                    <!-- Skills content will be populated -->
                 </div>
-                <div id="columnchart"></div>
+                <div class="chart-card-full" id="columnchart">
+                    <!-- Column chart -->
+                </div>
             </section>
         </main>
     </div>
 
     <script src="assets/js/auth.js"></script>
     <script src="assets/js/piechart.js"></script>
-
 </body>
 </html>

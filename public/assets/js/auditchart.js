@@ -1,8 +1,8 @@
 import { fetchPassedAudits, fetchFailedAudits } from "./query.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
-  await initChart("#passed-audits-chart", fetchPassedAudits, 'Passed Audits by Project', '#6B7280', 'passed');
-  await initChart("#failed-audits-chart", fetchFailedAudits, 'Failed Audits by Project', '#9CA3AF', 'fail');
+  await initChart("#passed-audits-chart", fetchPassedAudits, 'Passed Audits ', '#6B7280', 'passed');
+  await initChart("#failed-audits-chart", fetchFailedAudits, 'Failed Audits ', '#9CA3AF', 'fail');
 });
 
 async function initChart(containerId, fetchFunction, title, color, auditType) {
@@ -12,11 +12,26 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
     return;
   }
 
+  // Create a title element with black background
+  const titleElement = document.createElement('div');
+  titleElement.style.backgroundColor = '#000000';
+  titleElement.style.color = '#E5E7EB';
+  titleElement.style.padding = '8px 16px';
+  titleElement.style.borderRadius = '4px';
+  titleElement.style.marginBottom = '10px';
+  titleElement.style.display = 'inline-block';
+  titleElement.style.fontSize = '16px';
+  titleElement.style.fontWeight = 'bold';
+  titleElement.textContent = title.trim();
+  
+  // Insert the title before the chart container
+  chartContainer.parentNode.insertBefore(titleElement, chartContainer);
+
   try {
     const auditData = await fetchFunction();
 
     if (!Array.isArray(auditData) || auditData.length === 0) {
-      chartContainer.innerHTML = `<div class="chart-no-data">There are no audit ${auditType}</div>`;
+      chartContainer.innerHTML = `<div class="chart-no-data" style="background: ${auditType === 'passed' ? 'rgba(107, 114, 128, 0.2)' : 'rgba(156, 163, 175, 0.2)'}; padding: 10px; border-radius: 5px;">There are no audit ${auditType}</div>`;
       return;
     }
 
@@ -73,15 +88,15 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
         },
         offsetY: 0
       },
+      // Remove the title from chart options since we're adding it manually
       title: {
-        text: title,
+        text: '',
         align: 'center',
         style: {
-          color: '#E5E7EB',
-          fontSize: '16px',
-          fontWeight: 'bold'
+          color: 'transparent',
+          fontSize: '0px'
         },
-        margin: 20
+        margin: 0
       },
       tooltip: {
         enabled: true,
@@ -96,7 +111,10 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
         align: 'center',
         style: {
           color: '#9CA3AF',
-          fontSize: '16px'
+          fontSize: '16px',
+          background: auditType === 'passed' ? 'rgba(107, 114, 128, 0.2)' : 'rgba(156, 163, 175, 0.2)',
+          padding: '10px',
+          borderRadius: '5px'
         }
       }
     };
@@ -105,6 +123,6 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
 
   } catch (error) {
     console.error(`Error loading ${title.toLowerCase()}:`, error);
-    chartContainer.innerHTML = `<div class="chart-error">Error loading data: ${error.message}</div>`;
+    chartContainer.innerHTML = `<div class="chart-error" style="background: ${auditType === 'passed' ? 'rgba(107, 114, 128, 0.2)' : 'rgba(156, 163, 175, 0.2)'}; padding: 10px; border-radius: 5px;">Error loading data: ${error.message}</div>`;
   }
 }

@@ -15,6 +15,7 @@ body {
     padding: 1rem;
     position: relative;
     overflow-x: hidden;
+    color: #f1f5f9;
 }
 
 body::before {
@@ -251,6 +252,27 @@ input[type="password"]::placeholder {
     transform: translateY(0);
 }
 
+.auth-error-message {
+    color: #ef4444;
+    text-align: center;
+    margin-top: 1.25rem;
+    padding: 1rem;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.auth-error-message.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .submit-btn {
     width: 100%;
     padding: 1.125rem;
@@ -296,25 +318,41 @@ input[type="password"]::placeholder {
     left: 100%;
 }
 
-.auth-error-message {
-    color: #ef4444;
-    text-align: center;
-    margin-top: 1.25rem;
-    padding: 1rem;
-    background: rgba(239, 68, 68, 0.1);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    border-radius: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+.submit-btn.loading {
+    pointer-events: none;
+    opacity: 0.8;
 }
 
-.auth-error-message.show {
-    opacity: 1;
-    transform: translateY(0);
+.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border: 2px solid transparent;
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.submit-btn:focus-visible,
+input:focus-visible,
+.pw-toggle:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .login-container {
+        max-width: 24rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -407,12 +445,6 @@ input[type="password"]::placeholder {
     }
 }
 
-@media (min-width: 481px) and (max-width: 768px) {
-    .login-container {
-        max-width: 24rem;
-    }
-}
-
 @media (min-width: 1200px) {
     .login-container {
         max-width: 32rem;
@@ -437,6 +469,10 @@ input[type="password"]::placeholder {
         background: #3b82f6;
         color: #000;
     }
+    
+    body {
+        color: #fff;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -449,35 +485,82 @@ input[type="password"]::placeholder {
     body::before {
         animation: none;
     }
+    
+    .login-container::before {
+        animation: none;
+    }
+    
+    .welcome-container h1 {
+        animation: none;
+    }
 }
 
-.submit-btn:focus-visible,
-input:focus-visible,
-.pw-toggle:focus-visible {
-    outline: 2px solid #3b82f6;
-    outline-offset: 2px;
+@media print {
+    body::before {
+        display: none;
+    }
+    
+    .login-container {
+        box-shadow: none;
+        border: 1px solid #333;
+        background: #fff;
+        color: #000;
+    }
+    
+    .submit-btn {
+        background: #333;
+        color: #fff;
+    }
 }
 
-.submit-btn.loading {
-    pointer-events: none;
-    opacity: 0.8;
+@media (prefers-color-scheme: dark) {
 }
 
-.submit-btn.loading::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 20px;
-    height: 20px;
-    margin: -10px 0 0 -10px;
-    border: 2px solid transparent;
-    border-top: 2px solid #fff;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+@media (prefers-color-scheme: light) {
+    body {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #94a3b8 75%, #64748b 100%);
+        color: #1e293b;
+    }
+    
+    .welcome-container h1 {
+        color: #1e293b;
+        text-shadow: 
+            0 2px 10px rgba(255, 255, 255, 0.5),
+            0 4px 20px rgba(59, 130, 246, 0.3);
+    }
+    
+    .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        color: #1e293b;
+    }
+    
+    .login-container h1 {
+        color: #1e293b;
+    }
+    
+    label {
+        color: #475569;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+        background: rgba(248, 250, 252, 0.8);
+        color: #1e293b;
+        border-color: rgba(100, 116, 139, 0.5);
+    }
+    
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+        background: rgba(248, 250, 252, 0.95);
+    }
+    
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+        color: #64748b;
+    }
+    
+    .pw-toggle {
+        color: #64748b;
+    }
 }
