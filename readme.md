@@ -131,9 +131,5 @@ cd graphql
 
 ---
 
-## 📬 Contact
-
-For any issues, suggestions, or contributions, feel free to open a pull request or message me via the Reboot01 platform.
-
 
 
