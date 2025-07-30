@@ -67,7 +67,7 @@ function updateProfileUI(data) {
     document.getElementById('Done').textContent = formatBytes(user.totalUp || 0);
     console.log('Pending Projects:', pendingProjects);
     const projects = pendingProjects.map(p => p || 'Unknown Project');
-        const colors = ['blue', 'green', 'purple', 'orange', 'red', 'yellow'];
+        const colors = ['blue', 'orange', 'red', 'yellow'];
     
     const container = document.getElementById('projectListContainer');
         container.innerHTML = `
