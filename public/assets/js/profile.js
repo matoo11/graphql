@@ -1,3 +1,4 @@
+import { validatePath } from './errors.js';
 import {
     fetchUserAttrs,
     fetchUserInfo,
@@ -105,6 +106,7 @@ async function initProfile() {
 document.addEventListener('DOMContentLoaded', initProfile);
 window.initProfile = initProfile;
 document.addEventListener('DOMContentLoaded', () => {
+    validatePath();
     const logoutForm = document.getElementById('logoutForm');
   
     if (logoutForm) {
