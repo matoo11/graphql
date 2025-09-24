@@ -53,7 +53,7 @@ if (loginForm && usernameInput && passwordInput && authErrorDiv && usernameError
     localStorage.setItem('jwtToken', jwtToken);
     console.log("token: " + jwtToken)
     console.log('JWT token stored successfully!');
-    window.location.href = "./index";
+    window.location.href = "./main";
   } catch (error) {
     authErrorDiv.textContent = 'An error occurred. Please try again.';
     console.error('Error fetching/storing JWT:', error);
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('jwtToken');
     console.log("Retrieved token:", token);
     if (token && window.location.pathname.endsWith('login')) {
-        window.location.href = './index';
+        window.location.href = './main';
         console.log("DOMContentLoaded event fired");
 
       }

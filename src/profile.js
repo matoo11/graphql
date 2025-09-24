@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
 
             localStorage.removeItem('jwtToken');
-            window.location.href = './login';
+            window.location.href = './index';
         });
     }
 });
