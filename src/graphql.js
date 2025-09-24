@@ -3,7 +3,7 @@ export async function graphqlQuery(query, variables = {}) {
         const jwtToken = localStorage.getItem('jwtToken');
         if (!jwtToken) {
             console.error('JWT token not found. Redirecting to login...');
-            window.location.href = './login.html';
+            window.location.href = './login';
             return null;
         }
 

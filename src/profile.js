@@ -1,4 +1,3 @@
-import { validatePath } from './errors.js';
 import {
     fetchUserAttrs,
     fetchUserInfo,
@@ -28,7 +27,7 @@ function testLevel(level) {
 
 async function FetchProfileData() {
     try {
-        const [userAttrs, user, xp, pendingProjects,skil] = await Promise.all([
+        const [userAttrs, user, xp, pendingProjects, skil] = await Promise.all([
             fetchUserAttrs(),
             fetchUserInfo(),
             fetchXP(),
@@ -38,7 +37,7 @@ async function FetchProfileData() {
 
         const level = user?.login ? await fetchLevel(user.login) : 0;
 
-        return { userAttrs, user, xp, level, pendingProjects,skil };
+        return { userAttrs, user, xp, level, pendingProjects, skil };
     } catch (err) {
         console.error('Error in FetchProfileData:', err);
         return null;
@@ -51,7 +50,7 @@ function updateProfileUI(data) {
         return;
     }
     console.log('Profile data:', data);
-    const { userAttrs, user, xp, level, pendingProjects,skil } = data;
+    const { userAttrs, user, xp, level, pendingProjects, skil } = data;
     console.log('skil:', skil);
     document.getElementById('userName').textContent = user.login || 'Unknown';
     document.getElementById('userLocation').textContent = userAttrs?.country || 'Unknown Location';
@@ -67,20 +66,20 @@ function updateProfileUI(data) {
     document.getElementById('Done').textContent = formatBytes(user.totalUp || 0);
     console.log('Pending Projects:', pendingProjects);
     const projects = pendingProjects.map(p => p || 'Unknown Project');
-        const colors = ['blue', 'orange', 'red', 'yellow'];
-    
+    const colors = ['blue', 'orange', 'red', 'yellow'];
+
     const container = document.getElementById('projectListContainer');
-        container.innerHTML = `
+    container.innerHTML = `
         <ul class="project-list">
             ${projects.map((name, index) => `
                 <li><span class="dot ${colors[index % colors.length]}"></span> ${name}</li>
             `).join('')}
         </ul>
     `;
-    
+
     document.getElementById('pendingProjects').textContent = projects.length;
-    
-    
+
+
     document.getElementById('totalPoints').textContent = formatBytes(xp || 0);
     document.getElementById('Level').textContent = `#${level}`;
     document.getElementById('rank').textContent = testLevel(level);
@@ -106,16 +105,15 @@ async function initProfile() {
 document.addEventListener('DOMContentLoaded', initProfile);
 window.initProfile = initProfile;
 document.addEventListener('DOMContentLoaded', () => {
-    validatePath();
     const logoutForm = document.getElementById('logoutForm');
-  
+    
+
     if (logoutForm) {
-      logoutForm.addEventListener('submit', function (e) {
-        e.preventDefault(); 
-  
-        localStorage.removeItem('jwtToken');
-        window.location.href = './login.html';
-      });
+        logoutForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            localStorage.removeItem('jwtToken');
+            window.location.href = './login';
+        });
     }
-  });
-  
+});
