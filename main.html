@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="#">
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script type="module" src="/src/profile.js"></script>
+    <script type="module" src="/src/error.js"></script>
     <script type="module" src="/src/radarchart.js"></script>
     <script type="module" src="/src/radial.js"></script>
     <script type="module" src="/src/barchart.js"></script>
@@ -108,13 +109,13 @@
             <!-- Charts Section -->
             <section class="charts-section">
                 <div class="chart-card">
-                    <h3>Progress 📊</h3>
+                    <h3>XP Progress 📊</h3>
                     <div id="progress-chart"></div>
                 </div>
 
                 <div class="activity-card">
                     <div class="notification-dot"></div>
-                    <h3>Skills Overview</h3>
+                    <h3>Skills Radar</h3>
                     <div class="activity-list" id="radarchart">
                         <!-- Radar chart will be rendered here -->
                     </div>
@@ -123,19 +124,10 @@
 
             <!-- Info Section -->
             <section class="info-section">
-                <div class="achievements-card">
-                    <h3>🏆 Audit Status</h3>
-                    <div class="achievements-list" id="passed-audits-chart">
-                        <!-- Passed audits chart -->
-                    </div>
-                    <div class="achievements-list" id="failed-audits-chart">
-                        <!-- Failed audits chart -->
-                    </div>
-                </div>
-                <div class="skills-card" id="skills-card">
-                    <h3>🛠️ Skills</h3>
-                    <!-- Skills content will be populated -->
-                </div>
+                
+                <!-- <div class="skills-card" id="skills-card">
+                    <h3> Skills</h3>
+                </div> -->
                 <div class="chart-card-full" id="columnchart">
                     <!-- Column chart -->
                 </div>

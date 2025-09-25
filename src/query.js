@@ -136,64 +136,60 @@ export async function fetchSkills() {
   }
   
 
-  export async function fetchSkills2() {
-    const query = `
-       query {
-        transaction(
-            where: {
-                _and: [
-                    {type: { _iregex: "(^|[^[:alnum:]_])[[:alnum:]_]*skill_[[:alnum:]_]*($|[^[:alnum:]_])" }},
-                    {type: {_like: "%skill%"}},
-                    {object: {type: {_eq: "project"}}},
-                    {type: {_in: [
-                         "skill_git", "skill_go", "skill_js", 
-                        "skill_html", "skill_css", "skill_unix", "skill_docker", 
-                        "skill_sql"
-                    ]}}
-                ]
-            }
-            order_by: [{type: asc}, {createdAt: desc}]
-            distinct_on: type
-        ) {
-            amount
-            type
-        }
-    }
-    `;
+  // export async function fetchSkills2() {
+  //   const query = `
+  //      query {
+  //       transaction(
+  //           where: {
+  //               _and: [
+  //                   {type: { _iregex: "(^|[^[:alnum:]_])[[:alnum:]_]*skill_[[:alnum:]_]*($|[^[:alnum:]_])" }},
+  //                   {type: {_like: "%skill%"}},
+  //                   {object: {type: {_eq: "project"}}},
+  //                   {type: {_in: [
+  //                        "skill_git", "skill_go", "skill_js", 
+  //                       "skill_html", "skill_css", "skill_unix", "skill_docker", 
+  //                       "skill_sql"
+  //                   ]}}
+  //               ]
+  //           }
+  //           order_by: [{type: asc}, {createdAt: desc}]
+  //           distinct_on: type
+  //       ) {
+  //           amount
+  //           type
+  //       }
+  //   }
+  //   `;
   
-    const res = await graphqlQuery(query);
-    return res?.data?.transaction || [];
-  }
+  //   const res = await graphqlQuery(query);
+  //   return res?.data?.transaction || [];
+  // }
     
 
-export async function fetchprojectsDone() { 
-    const query=`
-      query Transaction {
-    transaction(
-      where: {
-        type: { _eq: "xp" }
-        event: { path: { _eq: "/bahrain/bh-module" } }
-      }
-    ) {
+export async function fetchXpProg() {
+  const query = `
+    {
+      transaction(where: { type: { _eq: "xp" } }) {
+        amount
         createdAt
-      object {
-        name
-        
+        object {
+          name
+        }
       }
     }
-  }
-    `;
+  `;
 
-    const res = await graphqlQuery(query);
+  const res = await graphqlQuery(query);
 
-    const projects = res?.data?.transaction?.map(p => ({
-    name: p.object?.name,
-    createdAt: p.createdAt
-})) || [];
+  const projects = res?.data?.transaction?.map(p => ({
+    name: p.object?.name || "Unknown Project",
+    xp: p.amount,
+    createdAt: p.createdAt,
+  })) || [];
 
-return projects;
-
+  return projects;
 }
+
 
 export async function fetchPassedAudits() {
   const query = `

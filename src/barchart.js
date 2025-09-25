@@ -1,4 +1,4 @@
-import { fetchprojectsDone } from './query.js';
+import { fetchXpProg } from './query.js';
 
 document.addEventListener('DOMContentLoaded', async function () {
   const chartContainer = document.querySelector("#progress-chart");
@@ -8,65 +8,86 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   try {
-    const data = await fetchprojectsDone();
+    const data = await fetchXpProg();
 
+    // Sort by date
     const sorted = data.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
-    const projectNames = sorted.map(p => p.name || "Unnamed");
-    const dates = sorted.map(p => new Date(p.createdAt).toLocaleDateString());
+    // Build XP gained + cumulative XP progress
+    let totalXp = 0;
+    const progress = sorted.map(p => {
+      totalXp += p.xp;
+      return {
+        date: new Date(p.createdAt),   // keep as Date object
+        xpGained: p.xp,
+        totalXp: totalXp
+      };
+    });
 
     const options = {
-      series: [{
-        name: "Projects Done",
-        data: projectNames.map((_, i) => i + 1)
-      }],
-      chart: {
-        height: 350,
-        type: 'line',
-        zoom: {
-          enabled: false
+      series: [
+        {
+          name: "XP Gained",
+          data: progress.map(p => [p.date.getTime(), p.xpGained]) // timestamp + value
         },
-        foreColor: '#e5e7eb', 
+        {
+          name: "Total XP",
+          data: progress.map(p => [p.date.getTime(), p.totalXp])
+        }
+      ],
+      chart: {
+        height: 400,
+        type: 'line',
+        zoom: { enabled: false },
+        foreColor: '#d1d5db',
         background: 'transparent'
       },
-      theme: {
-        mode: 'dark'
-      },
-      dataLabels: {
-        enabled: false
-      },
+      theme: { mode: 'dark' },
+      dataLabels: { enabled: false },
       stroke: {
-        curve: 'straight'
+        curve: 'smooth',
+        width: 3
       },
-      title: {
-        text: 'Completed Projects Over Time',
-        align: 'left',
-        style: {
-          color: '#f9fafb',
-          fontSize: '16px'
-        }
+      colors: ['#f59e0b', '#3b82f6'],
+      markers: {
+        size: 4,
+        hover: { size: 6 }
       },
       grid: {
-        borderColor: '#374151', 
-        row: {
-          colors: ['#1f2937', 'transparent'], 
-          opacity: 0.5
-        }
+        borderColor: '#374151',
+        row: { colors: ['#111827', 'transparent'], opacity: 0.1 }
       },
       xaxis: {
-        categories: dates,
+        type: 'datetime',
         labels: {
-          style: {
-            colors: '#000000' 
+          style: { colors: '#9ca3af' },
+          datetimeFormatter: {
+            year: 'yyyy',
+            month: "MMM 'yy"
           }
-        }
+        },
+        tickAmount: Math.ceil(progress.length / 120), // approx 1 tick per 4 months if many data points
+        axisBorder: { color: '#4b5563' },
+        axisTicks: { color: '#4b5563' }
       },
       yaxis: {
-        labels: {
-          style: {
-            colors: '#000000' 
-          }
+        title: { text: "XP", style: { color: '#9ca3af' } },
+        labels: { style: { colors: '#9ca3af' } }
+      },
+      tooltip: {
+        theme: 'dark',
+        shared: true,
+        intersect: false,
+        x: {
+          format: "dd MMM yyyy" // show full date on hover
+        },
+        y: {
+          formatter: (val) => val.toLocaleString() + " XP"
         }
+      },
+      legend: {
+        labels: { colors: '#d1d5db' },
+        position: 'top'
       }
     };
 
@@ -74,6 +95,6 @@ document.addEventListener('DOMContentLoaded', async function () {
     chart.render();
 
   } catch (error) {
-    console.error("Error loading project data:", error);
+    console.error("Error loading XP progress:", error);
   }
 });

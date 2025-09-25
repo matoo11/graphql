@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   const skills = await fetchSkills();
+  console.log("tttat", skills);
 
   if (!skills || skills.length === 0) {
     console.warn("No skill data found");
@@ -37,20 +38,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         dynamicAnimation: { enabled: true, speed: 350 }
       }
     },
-    title: {
-      text: 'Skill Radar',
-      align: 'center',
-      style: {
-        fontSize: '20px',
-        fontWeight: 'bold',
-        color: '#f1f5f9' 
-      }
-    },
     dataLabels: {
       enabled: true,
       style: {
         fontSize: '13px',
-        colors: ['#000000'] 
+        colors: ['#000000']
       }
     },
     plotOptions: {
@@ -59,17 +51,31 @@ document.addEventListener('DOMContentLoaded', async () => {
         polygons: {
           strokeColor: '#475569',
           fill: {
-            colors: ['#1e293b', '#ffffff'] 
+            colors: ['#1e293b', '#ffffff']
           }
         }
       }
     },
-    colors: ['#06b6d4'], 
+    colors: ['#06b6d4'],
     markers: {
       size: 5,
-      colors: ['#0f172a'], 
+      colors: ['#0f172a'],
       strokeColor: '#06b6d4',
       strokeWidth: 2
+    },
+    labels: {
+      style: {
+        fontSize: '12px',
+        fontWeight: 450,
+        colors: '#cbd5e1',
+      },
+      formatter: function (value) {
+        // Truncate very long labels
+        if (value.length > 15) {
+          return value.substring(0, 15) + '...';
+        }
+        return value;
+      }
     },
     tooltip: {
       theme: 'dark',
@@ -82,22 +88,22 @@ document.addEventListener('DOMContentLoaded', async () => {
       labels: {
         style: {
           fontSize: '12px',
-          fontWeight: 500,
-          colors: '#cbd5e1' 
+          fontWeight: 450,
+          colors: '#cbd5e1'
         }
       }
     },
     yaxis: {
-  show: true,
-  tickAmount: 5,
-  labels: {
-    formatter: val => `${val}`,
-    style: {
-      fontSize: '11px',
-      color: '#ffffff' 
+      show: true,
+      tickAmount: 5,
+      labels: {
+        formatter: val => `${val}`,
+        style: {
+          fontSize: '11px',
+          color: '#ffffff'
+        }
+      }
     }
-  }
-}
 
   };
 

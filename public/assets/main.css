@@ -980,3 +980,10 @@ input:focus, select:focus, textarea:focus {
 .blue { background-color: #3B82F6; }
 .green { background-color: #10B981; }
 .yellow { background-color: #F59E0B; }
+
+
+
+#radarchart {
+  width: 170%;       
+  height: 450px;     
+}
