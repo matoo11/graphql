@@ -65,7 +65,7 @@ if (loginForm && usernameInput && passwordInput && authErrorDiv && usernameError
 document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('jwtToken');
     console.log("Retrieved token:", token);
-    if (token && window.location.pathname.endsWith('login')) {
+    if (token && window.location.pathname.endsWith('index')) {
         window.location.href = './main';
         console.log("DOMContentLoaded event fired");
 
