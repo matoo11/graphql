@@ -257,7 +257,6 @@ export async function fetchFailedAudits() {
   try {
     const response = await graphqlQuery(query);
     
-    // Process the audit data
     const audits = response?.data?.user?.failedAudits || [];
     const projectMap = new Map();
 

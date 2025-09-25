@@ -12,7 +12,6 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
     return;
   }
 
-  // Create a title element with black background
   const titleElement = document.createElement('div');
   titleElement.style.backgroundColor = '#000000';
   titleElement.style.color = '#E5E7EB';
@@ -24,7 +23,6 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
   titleElement.style.fontWeight = 'bold';
   titleElement.textContent = title.trim();
   
-  // Insert the title before the chart container
   chartContainer.parentNode.insertBefore(titleElement, chartContainer);
 
   try {
@@ -88,7 +86,6 @@ async function initChart(containerId, fetchFunction, title, color, auditType) {
         },
         offsetY: 0
       },
-      // Remove the title from chart options since we're adding it manually
       title: {
         text: '',
         align: 'center',

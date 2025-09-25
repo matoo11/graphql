@@ -1,11 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Wait for profile data to be loaded
   initProfile().then(() => {
-    // Get the values from the UI (which were set by updateProfileUI)
     const doneText = document.getElementById('Done').textContent;
     const receivedText = document.getElementById('recived').textContent;
     
-    // Extract numeric values from the formatted text (e.g., "3.5 MB" -> 3.5)
     const doneSize = parseFloat(doneText) || 0;
     const receivedSize = parseFloat(receivedText) || 0;
     
@@ -14,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
       chart: {
         width: '100%',
         type: 'donut',
+        background: 'transparent', 
+        foreColor: '#E5E7EB'      
       },
       labels: [`Done (${doneText})`, `Received (${receivedText})`],
       colors: ['#4CAF50', '#2196F3'],
@@ -33,6 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
       },
       legend: {
         position: 'bottom',
+        labels: {
+          colors: '#E5E7EB' 
+        },
         formatter: function(seriesName, opts) {
           return seriesName + ' - ' + opts.w.globals.series[opts.seriesIndex] + ' MB';
         }

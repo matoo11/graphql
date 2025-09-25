@@ -27,7 +27,8 @@ document.addEventListener('DOMContentLoaded', async function() {
                 type: 'radialBar',
                 toolbar: {
                     show: false
-                }
+                },
+                background: 'transparent' 
             },
             plotOptions: {
                 radialBar: {
@@ -37,54 +38,44 @@ document.addEventListener('DOMContentLoaded', async function() {
                     hollow: {
                         margin: 5,
                         size: '30%',
-                        background: 'transparent',
-                        image: undefined,
+                        background: 'transparent'
                     },
                     track: {
                         show: true,
-                        startAngle: undefined,
-                        endAngle: undefined,
-                        background: '#f2f2f2',
+                        background: '#1f2937', 
                         strokeWidth: '97%',
-                        opacity: 1,
-                        margin: 5,
-                        dropShadow: {
-                            enabled: false,
-                            top: 0,
-                            left: 0,
-                            blur: 3,
-                            opacity: 0.5
-                        }
+                        opacity: 0.5,
+                        margin: 5
                     },
                     dataLabels: {
                         name: {
                             fontSize: '16px',
-                            color: undefined,
+                            color: '#e5e7eb', 
                             fontWeight: 600
                         },
                         value: {
                             fontSize: '14px',
-                            color: undefined,
+                            color: '#d1d5db',
                             fontWeight: 400,
                             formatter: function (val) {
-                                return val ;
+                                return val;
                             }
                         },
                         total: {
                             show: true,
                             label: 'Overall Skills',
-                            color: '#373d3f',
+                            color: '#f9fafb',
                             fontWeight: 600,
                             fontSize: '16px',
                             formatter: function (w) {
                                 const sum = w.globals.series.reduce((a, b) => a + b, 0);
-                                return Math.round(sum / w.globals.series.length) ;
+                                return Math.round(sum / w.globals.series.length);
                             }
                         }
                     }
                 }
             },
-            colors: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'], // Extended color palette
+            colors: ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899'], 
             labels: labels,
             legend: {
                 show: true,
@@ -94,13 +85,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 offsetX: -10,
                 offsetY: 0,
                 labels: {
+                    colors: '#e5e7eb', 
                     useSeriesColors: true,
                 },
                 markers: {
                     size: 0
                 },
                 formatter: function(seriesName, opts) {
-                    return seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex] ;
+                    return seriesName + ':  ' + opts.w.globals.series[opts.seriesIndex];
                 },
                 itemMargin: {
                     vertical: 3
@@ -135,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const chartContainer = document.querySelector("#skills-card");
         if (chartContainer) {
             chartContainer.innerHTML = `
-                <div class="chart-error">
+                <div class="chart-error" style="color:#f87171; text-align:center; padding:10px;">
                     Failed to load skill data. Please try again later.
                 </div>
             `;
