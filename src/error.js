@@ -3,16 +3,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
     console.log('Current Path:', currentPath);
 
-    // Send current path to the network
-    fetch('/log-path', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ path: currentPath })
-    }).catch(err => console.error('Network error:', err));
+    const isValidPath = allowedPaths.includes(currentPath);
 
-    if (!allowedPaths.includes(currentPath)) {
+    if (!isValidPath) {
+        fetch('/log-path', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                path: currentPath,
+                is404: true
+            })
+        });
+    }
+
+    if (!isValidPath) {
         document.body.innerHTML = `
             <h1>404 - Page Not Found</h1>
             <button id="return-index">Return to Index</button>
