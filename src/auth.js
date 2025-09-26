@@ -64,7 +64,7 @@ if (loginForm && usernameInput && passwordInput && authErrorDiv && usernameError
 
 document.addEventListener('DOMContentLoaded', () => {
   if(window.location.pathname === ''){
-
+    console.log("fuck");
     window.location.href = './';
   }
     const token = localStorage.getItem('jwtToken');
