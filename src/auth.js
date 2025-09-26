@@ -67,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("Retrieved token:", token);
     if (token && window.location.pathname==='/' || token && window.location.pathname==='/index' ) {
         window.location.href = './main';
-        location.reload();
         console.log("ttdtdtt");
 
       }
