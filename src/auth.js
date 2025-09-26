@@ -63,13 +63,9 @@ if (loginForm && usernameInput && passwordInput && authErrorDiv && usernameError
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  if(window.location.pathname === ''){
-    console.log("fuck");
-    window.location.href = './';
-  }
     const token = localStorage.getItem('jwtToken');
     console.log("Retrieved token:", token);
-    if (token && window.location.pathname.endsWith('index') ||token && window.location.pathname.endsWith('/')||token && window.location.pathname === '') {
+    if (token && !window.location.pathname.endsWith('main') ) {
         window.location.href = './main';
         console.log("ttdtdtt");
 
